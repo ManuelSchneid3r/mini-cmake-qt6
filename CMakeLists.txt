@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.19)  # JSON support, Ubuntu 22.04
 project(mini-cmake-qt6)
+include(GNUInstallDirs)
+
 find_package(Qt6 6 REQUIRED Widgets)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -30,3 +32,14 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     )
 endif()
 
+
+install(TARGETS ${TARGET_APP}
+    BUNDLE DESTINATION .
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+message(
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
