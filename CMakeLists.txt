@@ -1,0 +1,32 @@
+cmake_minimum_required(VERSION 3.19)  # JSON support, Ubuntu 22.04
+project(mini-cmake-qt6)
+find_package(Qt6 6 REQUIRED Widgets)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+add_library(LIBRARY SHARED src/library.h src/library.cpp)
+
+add_executable(APPLICATION src/main.cpp)
+
+target_link_libraries(APPLICATION PRIVATE LIBRARY Qt6::Widgets)
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(ICON_NAME "AppIcon")
+    set(ICON_PATH "res/${ICON_NAME}.icns")
+    target_sources(APPLICATION PRIVATE ${target_sources})
+    set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+    set_target_properties(APPLICATION PROPERTIES
+        MACOSX_BUNDLE True
+        MACOSX_BUNDLE_BUNDLE_NAME "MACOSX_BUNDLE_BUNDLE_NAME"
+        MACOSX_BUNDLE_BUNDLE_VERSION "MACOSX_BUNDLE_BUNDLE_VERSION"
+        MACOSX_BUNDLE_COPYRIGHT "MACOSX_BUNDLE_COPYRIGHT"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "MACOSX_BUNDLE_GUI_IDENTIFIER"
+        MACOSX_BUNDLE_ICON_FILE ${ICON_NAME}
+        MACOSX_BUNDLE_INFO_STRING "MACOSX_BUNDLE_INFO_STRING"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "MACOSX_BUNDLE_SHORT_VERSION_STRING"
+    )
+endif()
+
