@@ -18,7 +18,7 @@ target_link_libraries(APPLICATION PRIVATE LIBRARY Qt6::Widgets)
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(ICON_NAME "AppIcon")
     set(ICON_PATH "res/${ICON_NAME}.icns")
-    target_sources(APPLICATION PRIVATE ${target_sources})
+    target_sources(APPLICATION PRIVATE ${ICON_PATH})
     set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     set_target_properties(APPLICATION PROPERTIES
         MACOSX_BUNDLE True
@@ -35,11 +35,6 @@ endif()
 
 install(TARGETS ${TARGET_APP}
     BUNDLE DESTINATION .
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
-
-message(
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
